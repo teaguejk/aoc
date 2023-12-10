@@ -40,7 +40,7 @@ func findLastInt(line string) string {
 func day1a() {
 	fmt.Println("Day1a")
 
-	input := "../inputs/input1a.txt"
+	input := "../inputs/input1.txt"
 
 	file, err := os.Open(input)
 
@@ -58,6 +58,46 @@ func day1a() {
 
 		first := findFirstInt(line)
 		last := findLastInt(line)
+
+		concat := first + last
+
+		num, err := strconv.Atoi(concat)
+
+		if err != nil {
+			log.Fatal("Bad")
+		}
+
+		sum += num
+	}
+
+	fmt.Println(sum)
+}
+
+func day1b() {
+	fmt.Println("Day1b")
+
+	input := "../inputs/input1.txt"
+
+	file, err := os.Open(input)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	sum := 0
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Println(line)
+
+		// TODO replace using new logic
+		// first := findFirstInt(line)
+		// last := findLastInt(line)
+
+		first := ""
+		last := ""
 
 		concat := first + last
 
