@@ -10,7 +10,6 @@ import (
 )
 
 func convertStringNumberToInt(s string) (int, error) {
-
 	stoimap := map[string]int{
 		"one":   1,
 		"two":   2,
