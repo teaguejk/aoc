@@ -2,34 +2,33 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 )
 
-func findFirstInt(line string) string {
-	var first string
+func findFirstInt(line string) (string, error) {
 	for _, ch := range line {
 		if isInt(string(ch)) {
-			first = string(ch)
-			break
+			return string(ch), nil
 		}
 	}
-	return first
+
+	return "", errors.New("Not found")
 }
 
-func findLastInt(line string) string {
-	var last string
+func findLastInt(line string) (string, error) {
 	length := len(line) - 1
 
 	for i := length; i >= 0; i -= 1 {
 		if isInt(string(line[i])) {
-			last = string(line[i])
-			break
+			return string(line[i]), nil
 		}
 	}
-	return last
+
+	return "", errors.New("Not found")
 }
 
 func day1a() {
@@ -51,8 +50,15 @@ func day1a() {
 		line := scanner.Text()
 		fmt.Println(line)
 
-		first := findFirstInt(line)
-		last := findLastInt(line)
+		first, err := findFirstInt(line)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		last, err := findLastInt(line)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		concat := first + last
 

@@ -33,28 +33,50 @@ func convertStringNumberToInt(s string) (int, error) {
 
 }
 
-func findFirstNumber(line string) string {
-	var first string
-	for _, ch := range line {
+func findFirstNumber(line string) (string, error) {
+	for i, ch := range line {
 		if isInt(string(ch)) {
-			first = string(ch)
-			break
+			return string(ch), nil
+		}
+
+		possible := ""
+
+		for _, ch := range line[i:] {
+			possible = possible + string(ch)
+			value, err := convertStringNumberToInt(possible)
+			if err != nil {
+				continue
+			} else {
+				return strconv.Itoa(value), nil
+			}
 		}
 	}
-	return first
+
+	return "", errors.New("Not found")
 }
 
-func findLastNumber(line string) string {
-	var last string
+func findLastNumber(line string) (string, error) {
 	length := len(line) - 1
 
 	for i := length; i >= 0; i -= 1 {
 		if isInt(string(line[i])) {
-			last = string(line[i])
-			break
+			return string(line[i]), nil
+		}
+
+		possible := ""
+
+		for _, ch := range line[i:] {
+			possible = possible + string(ch)
+			value, err := convertStringNumberToInt(possible)
+			if err != nil {
+				continue
+			} else {
+				return strconv.Itoa(value), nil
+			}
 		}
 	}
-	return last
+
+	return "", errors.New("Not found")
 }
 
 func day1b() {
@@ -76,13 +98,15 @@ func day1b() {
 		line := scanner.Text()
 		fmt.Println(line)
 
-		// TODO replace using new logic
-		// ? loop through line, check for ints, check for substrings containing string numbers
-		// first := findFirstInt(line)
-		// last := findLastInt(line)
+		first, err := findFirstNumber(line)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-		first := ""
-		last := ""
+		last, err := findLastNumber(line)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		concat := first + last
 
