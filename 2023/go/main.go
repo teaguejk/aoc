@@ -2,7 +2,13 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
+
+func isInt(s string) bool {
+	_, err := strconv.Atoi(s)
+	return err == nil
+}
 
 func main() {
 	var d string

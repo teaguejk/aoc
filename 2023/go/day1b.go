@@ -2,18 +2,39 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
 )
 
-func isInt(s string) bool {
-	_, err := strconv.ParseInt(s, 10, 64)
-	return err == nil
+func convertStringNumberToInt(s string) (int, error) {
+
+	stoimap := map[string]int{
+		"one":   1,
+		"two":   2,
+		"three": 3,
+		"four":  4,
+		"five":  5,
+		"six":   6,
+		"seven": 7,
+		"eight": 8,
+		"nine":  9,
+		"ten":   10,
+	}
+
+	value, exists := stoimap[s]
+
+	if exists {
+		return value, nil
+	} else {
+		return 0, errors.New("Not found")
+	}
+
 }
 
-func findFirstInt(line string) string {
+func findFirstNumber(line string) string {
 	var first string
 	for _, ch := range line {
 		if isInt(string(ch)) {
@@ -24,7 +45,7 @@ func findFirstInt(line string) string {
 	return first
 }
 
-func findLastInt(line string) string {
+func findLastNumber(line string) string {
 	var last string
 	length := len(line) - 1
 
@@ -35,42 +56,6 @@ func findLastInt(line string) string {
 		}
 	}
 	return last
-}
-
-func day1a() {
-	fmt.Println("Day1a")
-
-	input := "../inputs/input1.txt"
-
-	file, err := os.Open(input)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	scanner := bufio.NewScanner(file)
-
-	sum := 0
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		fmt.Println(line)
-
-		first := findFirstInt(line)
-		last := findLastInt(line)
-
-		concat := first + last
-
-		num, err := strconv.Atoi(concat)
-
-		if err != nil {
-			log.Fatal("Bad")
-		}
-
-		sum += num
-	}
-
-	fmt.Println(sum)
 }
 
 func day1b() {
@@ -93,6 +78,7 @@ func day1b() {
 		fmt.Println(line)
 
 		// TODO replace using new logic
+		// ? loop through line, check for ints, check for substrings containing string numbers
 		// first := findFirstInt(line)
 		// last := findLastInt(line)
 
