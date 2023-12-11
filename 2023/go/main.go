@@ -20,6 +20,7 @@ func main() {
 	fs := map[string]func(){
 		"1a": day1a,
 		"1b": day1b,
+		"2a": day2a,
 	}
 
 	if d == "all" {
