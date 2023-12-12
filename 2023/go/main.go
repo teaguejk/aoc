@@ -22,6 +22,7 @@ func main() {
 		"1b": day1b,
 		"2a": day2a,
 		"2b": day2b,
+		"3a": day3a,
 	}
 
 	if d == "all" {
