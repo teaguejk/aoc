@@ -35,8 +35,6 @@ func findMinimumPerGame(rounds []string) map[string]int {
 		}
 	}
 
-	fmt.Println(cmap)
-
 	return cmap
 }
 
