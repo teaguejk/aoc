@@ -28,7 +28,7 @@ func convertStringNumberToInt(s string) (int, error) {
 	if exists {
 		return value, nil
 	} else {
-		return 0, errors.New("Not found")
+		return 0, errors.New("not found")
 	}
 
 }
@@ -52,7 +52,7 @@ func findFirstNumber(line string) (string, error) {
 		}
 	}
 
-	return "", errors.New("Not found")
+	return "", errors.New("not found")
 }
 
 func findLastNumber(line string) (string, error) {
@@ -76,7 +76,7 @@ func findLastNumber(line string) (string, error) {
 		}
 	}
 
-	return "", errors.New("Not found")
+	return "", errors.New("not found")
 }
 
 func day1b() {
@@ -96,7 +96,6 @@ func day1b() {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		fmt.Println(line)
 
 		first, err := findFirstNumber(line)
 		if err != nil {
@@ -113,7 +112,7 @@ func day1b() {
 		num, err := strconv.Atoi(concat)
 
 		if err != nil {
-			log.Fatal("Bad")
+			log.Fatal("bad")
 		}
 
 		sum += num

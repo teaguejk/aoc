@@ -5,43 +5,10 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 )
 
-func processNumber(r int, c int, lines [][]string) int {
-
-	for isInt(string(lines[r][c])) {
-		c -= 1
-		if c == -1 {
-			break
-		}
-	}
-
-	c += 1
-	k := c
-	line := lines[r]
-	sn := "0"
-
-	for _, val := range line[c:] {
-		if isInt(string(val)) {
-			sn = sn + string(val)
-			lines[r][k] = "-"
-			k += 1
-		} else {
-			break
-		}
-	}
-
-	s, err := strconv.Atoi(sn)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return s
-}
-
-func day3a() {
-	fmt.Println("Day3a")
+func day3b() {
+	fmt.Println("Day3b")
 
 	input := "../inputs/input3.txt"
 
@@ -56,7 +23,6 @@ func day3a() {
 	var lines [][]string
 
 	for scanner.Scan() {
-
 		line := scanner.Text()
 
 		var num []string
@@ -67,10 +33,10 @@ func day3a() {
 
 			if isInt(sch) {
 				num = append(num, sch)
-			} else if ch == '.' {
-				num = append(num, "-")
-			} else {
+			} else if ch == '*' {
 				num = append(num, "+")
+			} else {
+				num = append(num, "-")
 			}
 		}
 
@@ -90,52 +56,83 @@ func day3a() {
 				continue
 			}
 
+			gearCount := 0
+			var vals []int
+
 			if isInt(string(lines[i][j-1])) { // back
+				gearCount += 1
+
 				r := i
 				c := j - 1
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
 			}
 			if isInt(string(lines[i][j+1])) { // forward
+				gearCount += 1
+
 				r := i
 				c := j + 1
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
 			}
 			if isInt(string(lines[i-1][j])) { // up
+				gearCount += 1
+
 				r := i - 1
 				c := j
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
 			}
 			if isInt(string(lines[i+1][j])) { // down
+				gearCount += 1
+
 				r := i + 1
 				c := j
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
 			}
 			if isInt(string(lines[i-1][j-1])) { // up left
+				gearCount += 1
+
 				r := i - 1
 				c := j - 1
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
 			}
 			if isInt(string(lines[i-1][j+1])) { // up right
+				gearCount += 1
+
 				r := i - 1
 				c := j + 1
-				sum += processNumber(r, c, lines)
+
+				vals = append(vals, processNumber(r, c, lines))
+
 			}
 			if isInt(string(lines[i+1][j-1])) { // down left
+				gearCount += 1
+
 				r := i + 1
 				c := j - 1
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
+
 			}
 			if isInt(string(lines[i+1][j+1])) { // down right
+				gearCount += 1
+
 				r := i + 1
 				c := j + 1
 
-				sum += processNumber(r, c, lines)
+				vals = append(vals, processNumber(r, c, lines))
+
+			}
+
+			if gearCount > 1 {
+				gearRatio := 1
+				for _, val := range vals {
+					gearRatio = gearRatio * val
+				}
+				sum += gearRatio
 			}
 		}
 	}

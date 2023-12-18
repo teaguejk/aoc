@@ -16,7 +16,7 @@ func findFirstInt(line string) (string, error) {
 		}
 	}
 
-	return "", errors.New("Not found")
+	return "", errors.New("not found")
 }
 
 func findLastInt(line string) (string, error) {
@@ -28,7 +28,7 @@ func findLastInt(line string) (string, error) {
 		}
 	}
 
-	return "", errors.New("Not found")
+	return "", errors.New("not found")
 }
 
 func day1a() {
@@ -48,7 +48,6 @@ func day1a() {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		fmt.Println(line)
 
 		first, err := findFirstInt(line)
 		if err != nil {
