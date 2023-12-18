@@ -123,6 +123,7 @@ func day3a() {
 			if isInt(string(lines[i-1][j+1])) { // up right
 				r := i - 1
 				c := j + 1
+
 				sum += processNumber(r, c, lines)
 			}
 			if isInt(string(lines[i+1][j-1])) { // down left
