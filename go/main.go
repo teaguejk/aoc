@@ -13,7 +13,7 @@ func isInt(s string) bool {
 func main() {
 	var d string
 
-	fmt.Println("Enter the problem to run")
+	fmt.Println("Run: ")
 	fmt.Scanln(&d)
 
 	// not the best way but it works
