@@ -44,9 +44,9 @@ func day3b() {
 	}
 
 	sum := 0
+	rmax := len(lines)
 
 	for i, line := range lines {
-		rmax := len(lines)
 		for j, val := range line {
 			if i == 0 || i == rmax {
 				continue
