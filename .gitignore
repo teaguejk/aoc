@@ -18,4 +18,5 @@
 # vendor/
 
 # AOC Inputs
-inputs/
+**inputs/
+[0-9][0-9].txt
