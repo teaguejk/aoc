@@ -1,0 +1,27 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+)
+
+func dayN() {
+	fmt.Println("DayN")
+
+	input := "../inputs/inputN.txt"
+
+	file, err := os.Open(input)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		fmt.Println(line)
+	}
+}
