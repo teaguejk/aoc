@@ -4,17 +4,18 @@ use std::path::Path;
 
 mod day01;
 
-
 fn main() {
-    use day01::*;
+    let day1 = ||{
+        use day01::*;
 
-    let (left, right) = parse(INPUT_01);
+        let input = parse(INPUT_01);
+        let part1 = day1a(&input);
+        let part2 = day1b(&input);
 
-    let res1a = day1a(&left, &right);
-    let res1b = day1b(&left, &right);
+        (part1.to_string(), part2.to_string())
+    };
+    println!("day 1: {:?}", day1());
 
-    println!("{}", res1a);
-    println!("{}", res1b);
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
@@ -22,3 +23,4 @@ where P: AsRef<Path>, {
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
 }
+
