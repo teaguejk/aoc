@@ -23,6 +23,8 @@ pub fn parse(path: &str) -> Input {
             left.push(nums[0]);
             right.push(nums[1]);
         }
+    } else {
+        panic!("error: could not read input file");
     }
     
     (left, right)
