@@ -5,7 +5,7 @@ use std::path::Path;
 mod day01;
 
 fn main() {
-    let day1 = ||{
+    let day1 = || {
         use day01::*;
 
         let input = parse(INPUT_01);
