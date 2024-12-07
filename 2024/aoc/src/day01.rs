@@ -32,8 +32,8 @@ pub fn day1a(input: &Input) -> i32 {
     let mut left = input.0.clone();
     let mut right = input.1.clone();
 
-    left.sort();
-    right.sort();
+    left.sort_unstable();
+    right.sort_unstable();
 
     left.iter().zip(right.iter()).map(|(l, r)| (l - r).abs()).sum()
 }
