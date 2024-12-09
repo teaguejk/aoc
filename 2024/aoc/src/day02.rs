@@ -69,12 +69,12 @@ fn is_report_safe2(report: &Vec<i32>) -> i32 {
     }
 
     // brute force it
-    for skip_idx in 0..report.len() {
+    for i in 0..report.len() {
         let subset: Vec<i32> = report
             .iter()
             .enumerate()
-            .filter(|(i, _)| *i != skip_idx)
-            .map(|(_, &n)| n)
+            .filter(|(x, _)| *x != i)
+            .map(|(_, &x)| x)
             .collect();
 
         // return is_report_safe(&subset);
