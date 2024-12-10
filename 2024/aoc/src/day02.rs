@@ -82,5 +82,6 @@ fn is_report_safe2(report: &Vec<i32>) -> i32 {
             return 1;
         }
     }
+    
     0
 }
