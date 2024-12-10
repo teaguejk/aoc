@@ -1,14 +1,15 @@
-use crate::read_lines;
+use std::fs::read_to_string;
 
 pub const INPUT: &str = "./inputs/02.txt";
 
 type Input = Vec<String>;
 
 pub fn parse(path: &str) -> Input {
-    let lines = read_lines(path)
-        .expect("error: could not read input file");
-
-    lines.flatten().collect()
+    read_to_string(path)
+        .expect("error: could not read input file")
+        .lines()
+        .map(|line| line.to_string())
+        .collect()
 }
 
 pub fn part1(input: &Input) -> i32 {

@@ -1,4 +1,4 @@
-use crate::read_lines;
+use std::fs::read_to_string;
 use std::collections::HashMap;
 
 pub const INPUT: &str = "./inputs/01.txt";
@@ -6,23 +6,18 @@ pub const INPUT: &str = "./inputs/01.txt";
 type Input = (Vec<i32>, Vec<i32>);
 
 pub fn parse(path: &str) -> Input {
-    let mut left: Vec<i32> = Vec::new();
-    let mut right: Vec<i32> = Vec::new();
-
-    let lines = read_lines(path)
-        .expect("error: could not read input file");
-
-    for line in lines.flatten() {
-        let nums: Vec<i32> = line
+    read_to_string(path)
+        .expect("error: could not read input file")
+        .lines()
+        .map(|line| {
+            let nums: Vec<i32> = line
             .split_whitespace()
             .map(|x| x.parse().unwrap())
             .collect();
-                            
-        left.push(nums[0]);
-        right.push(nums[1]);
-    }
-    
-    (left, right)
+
+            (nums[0], nums[1])
+        })
+        .unzip()
 }
 
 pub fn part1(input: &Input) -> i32 {
