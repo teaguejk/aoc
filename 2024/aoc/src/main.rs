@@ -18,7 +18,6 @@ fn main() {
         use day02::*;
 
         let input = parse(INPUT);
-        
         let part1 = part1(&input);
         let part2 = part2(&input);
 
