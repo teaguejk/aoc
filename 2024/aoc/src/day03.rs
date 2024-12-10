@@ -12,13 +12,11 @@ pub fn parse(path: &str) -> Input {
 
 pub fn part1(input: &Input) -> i32 {
     let regex = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
-    let mut total = 0;
 
-    for group in regex.captures_iter(input) {
-        total += group[1].parse::<i32>().unwrap() * group[2].parse::<i32>().unwrap();
-    }
-
-    total
+    regex
+        .captures_iter(input)
+        .map(|group| group[1].parse::<i32>().unwrap() * group[2].parse::<i32>().unwrap())
+        .sum()
 }
 
 pub fn part2(input: &Input) -> i32 {
