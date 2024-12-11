@@ -20,5 +20,29 @@ pub fn part1(input: &Input) -> i32 {
 }
 
 pub fn part2(input: &Input) -> i32 {
-    0
+    let regex = Regex::new(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").unwrap();
+    let mut on = true;
+
+    regex
+        .captures_iter(input)
+        .map(|group| {
+            match &group[0] {
+                "do()" => {
+                    on = true;
+                    0
+                }
+                "don't()" => {
+                    on = false;
+                    0
+                }
+                _ => {
+                    if on {
+                        group[1].parse::<i32>().unwrap() * group[2].parse::<i32>().unwrap()
+                    } else {
+                        0
+                    }
+                }
+            }
+        })
+        .sum()
 }
