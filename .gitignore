@@ -23,3 +23,6 @@
 
 # Rust
 **target/
+
+# Mac
+**.DS_Store
