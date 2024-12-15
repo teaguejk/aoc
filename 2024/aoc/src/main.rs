@@ -4,6 +4,7 @@ mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day05;
 
 fn main() {
     let day1 = || {
@@ -63,6 +64,20 @@ fn main() {
     let elapsed = now.elapsed();
     println!("took: {:.2?}", elapsed);
 
+    let day5 = || {
+        use day05::*;
+
+        let input = parse(INPUT);
+        let part1 = part1(&input);
+        let part2 = part2(&input);
+
+        (part1.to_string(), part2.to_string())
+    };
+
+    let now = Instant::now();
+    println!("day 45 {:?}", day5());
+    let elapsed = now.elapsed();
+    println!("took: {:.2?}", elapsed);
     // timing
     // let now = Instant::now();
     // let elapsed = now.elapsed();

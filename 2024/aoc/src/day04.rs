@@ -11,7 +11,7 @@ pub fn parse(path: &str) -> Input {
     read_to_string(path)
     .expect("error: could not read input file")
     .lines()
-    .map(|line| line.chars().collect())
+    .map(String::from)
     .collect()
 }
 
