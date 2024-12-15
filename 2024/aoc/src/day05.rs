@@ -44,8 +44,8 @@ pub fn part1(input: &Input) -> i32 {
         let mut pass = true;
 
         for (before, after) in rules {
-            if let Some(before_index) = message.iter().position(|&x| x == *before) {
-                if let Some(after_index) = message.iter().position(|&x| x == *after) {
+            if let Some(before_index) = message.iter().position(|x| x == before) {
+                if let Some(after_index) = message.iter().position(|x| x == after) {
                     if before_index > after_index {
                         pass = false;
                         break;
