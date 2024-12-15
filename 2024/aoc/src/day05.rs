@@ -61,14 +61,7 @@ pub fn part1(input: &Input) -> i32 {
     
     valid
         .iter()
-        .map(|message| {
-            let mid = message.len() / 2;
-            if message.len() % 2 == 0 {
-                (message[mid - 1] + message[mid]) / 2
-            } else {
-                message[mid]
-            }
-        })
+        .map(|message| message[message.len() / 2] )
         .sum()
 }
 
