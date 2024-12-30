@@ -6,7 +6,7 @@ mod day03;
 mod day04;
 mod day05;
 
-macro_rules! run_day {
+macro_rules! init_day {
     ($day:ident) => {
         (
             stringify!($day), || {
@@ -22,11 +22,11 @@ macro_rules! run_day {
 
 fn main() {
     let days: Vec<(&str, fn() -> (String, String))> = vec![
-        run_day!(day01),
-        run_day!(day02),
-        run_day!(day03),
-        run_day!(day04),
-        run_day!(day05),
+        init_day!(day01),
+        init_day!(day02),
+        init_day!(day03),
+        init_day!(day04),
+        init_day!(day05),
     ];
 
     for (day, run) in days {
