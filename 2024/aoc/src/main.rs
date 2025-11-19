@@ -8,15 +8,13 @@ mod day05;
 
 macro_rules! init_day {
     ($day:ident) => {
-        (
-            stringify!($day), || {
+        (stringify!($day), || {
                 use $day::*;
                 let input = parse(INPUT);
                 let part1 = part1(&input);
                 let part2 = part2(&input);
                 (part1.to_string(), part2.to_string())
-            },
-        )
+        })
     };
 }
 

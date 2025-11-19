@@ -1,5 +1,5 @@
-use std::fs::read_to_string;
 use std::collections::HashMap;
+use std::fs::read_to_string;
 
 pub const INPUT: &str = "./inputs/01.txt";
 
@@ -11,9 +11,9 @@ pub fn parse(path: &str) -> Input {
         .lines()
         .map(|line| {
             let nums: Vec<i32> = line
-            .split_whitespace()
-            .map(|x| x.parse().unwrap())
-            .collect();
+                .split_whitespace()
+                .map(|x| x.parse().unwrap())
+                .collect();
 
             (nums[0], nums[1])
         })
@@ -27,7 +27,10 @@ pub fn part1(input: &Input) -> i32 {
     left.sort_unstable();
     right.sort_unstable();
 
-    left.iter().zip(right.iter()).map(|(l, r)| (l - r).abs()).sum()
+    left.iter()
+        .zip(right.iter())
+        .map(|(l, r)| (l - r).abs())
+        .sum()
 }
 
 pub fn part2(input: &Input) -> i32 {
@@ -46,5 +49,10 @@ pub fn part2(input: &Input) -> i32 {
         }
     }
 
-    similarities.iter().filter(|&(_, &count)| count > 0).map(|(&value, &count)| value * count).sum()
+    similarities
+        .iter()
+        .filter(|&(_, &count)| count > 0)
+        .map(|(&value, &count)| value * count)
+        .sum()
 }
+
