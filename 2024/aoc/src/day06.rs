@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::fs::read_to_string;
 
 pub const GUARD: char = '^';
@@ -22,7 +23,7 @@ pub fn part1(input: &Input) -> i32 {
     let guard = find_guard(input);
     let (mut x, mut y) = guard.expect("guard to be found");
     
-    let mut visited = std::collections::HashSet::new();
+    let mut visited = HashSet::new();
     let mut dir = 0;
 
     let directions: [(isize, isize); 4] = [(-1, 0), (0, 1), (1, 0), (0, -1)];
