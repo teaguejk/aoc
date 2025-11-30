@@ -5,15 +5,16 @@ mod day02;
 mod day03;
 mod day04;
 mod day05;
+mod day06;
 
 macro_rules! init_day {
     ($day:ident) => {
         (stringify!($day), || {
-                use $day::*;
-                let input = parse(INPUT);
-                let part1 = part1(&input);
-                let part2 = part2(&input);
-                (part1.to_string(), part2.to_string())
+            use $day::*;
+            let input = parse(INPUT);
+            let part1 = part1(&input);
+            let part2 = part2(&input);
+            (part1.to_string(), part2.to_string())
         })
     };
 }
@@ -25,6 +26,7 @@ fn main() {
         init_day!(day03),
         init_day!(day04),
         init_day!(day05),
+        init_day!(day06),
     ];
 
     for (day, run) in days {
