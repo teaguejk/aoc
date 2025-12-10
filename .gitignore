@@ -26,3 +26,7 @@
 
 # Mac
 **.DS_Store
+
+# C
+*.o
+aoc
