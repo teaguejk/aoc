@@ -39,7 +39,7 @@ static void run_part(int day_number, int part_number, Solution fn) {
     char *result = fn(input_path);
     clock_gettime(CLOCK_MONOTONIC, &t1);
 
-    printf("day %d part %d: %.2f ms -> %s\n",
+    printf("day %d: part %d -> took: %.2f ms -> %s\n",
         day_number, part_number, elapsed_ms(t0, t1), result ? result : "(null)");
 
     free(result);
@@ -69,25 +69,30 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    if (argc != 3) {
-        fprintf(stderr, "error: missing part number\n");
-        return 1;
+    int part = 0;
+    if (argc == 3) {
+        part = atoi(argv[2]);
+        if (part != 1 && part != 2) {
+            fprintf(stderr, "error: invalid part (1 or 2)\n");
+            return 1;
+        }
     }
 
-    int part = atoi(argv[2]);
-    if (part != 1 && part != 2) {
-        fprintf(stderr, "error: invalid part (1 or 2)\n");
-        return 1;
-    }
-
-    Solution fn = NULL;
+    Solution fn1 = NULL, fn2 = NULL;
     for (int i = 0; days[i].number != 0; i++) {
         if (days[i].number == day) {
-            fn = (part == 1) ? days[i].part1 : days[i].part2;
+            fn1 = days[i].part1;
+            fn2 = days[i].part2;
             break;
         }
     }
 
-    run_part(day, part, fn);
+    if (part == 0) {
+        run_part(day, 1, fn1);
+        run_part(day, 2, fn2);
+    } else {
+        run_part(day, part, (part == 1) ? fn1 : fn2);
+    }
+
     return 0;
 }
