@@ -78,6 +78,7 @@ static char* part1(const char* input_path) {
                 continue;
             }
 
+            // the number was invalid, store it
             if (matches_count >= matches_capacity) {
                 matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
                 int64_t* temp = realloc(matches, sizeof(int64_t) * matches_capacity);
@@ -174,8 +175,34 @@ static char* part2(const char* input_path) {
                 return strdup("error: could not allocate memory");
             }
 
+            snprintf(numStr, len + 1, "%" PRId64, i);
 
-            // the number was invalud, store it
+            int has_repeat = 0;
+            for (int segment_len = 1; segment_len <= len / 2; segment_len++) {
+                if (len % segment_len != 0) {
+                    continue;
+                }
+                
+                int is_repeating = 1;
+                for (int pos = segment_len; pos < len; pos++) {
+                    if (numStr[pos] != numStr[pos % segment_len]) {
+                        is_repeating = 0;
+                        break;
+                    }
+                }
+                
+                if (is_repeating) {
+                    has_repeat = 1;
+                    break;
+                }
+            }
+
+            if (!has_repeat) {
+                free(numStr);
+                continue;
+            }
+
+            // the number was invalid, store it
             snprintf(numStr, len + 1, "%" PRId64, i);
             if (matches_count >= matches_capacity) {
                 matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
