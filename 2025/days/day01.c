@@ -49,20 +49,21 @@ static char* part1(const char* input_path) {
         }
     }
 
-    char tmp[32];
-    int n = snprintf(tmp, sizeof(tmp), "%d", zero_count);
-    if (n < 0 || n >= (int)sizeof(tmp)) {
+    int n = snprintf(NULL, 0, "%d", zero_count);
+    if (n < 0) {
         free_file_lines(file);
         return strdup("error: formatting output");
     }
 
-    char* result = strdup(tmp);
+    char* result = malloc(n + 1);
     if (!result) {
         free_file_lines(file);
         return strdup("error: allocating output string");
     }
+    snprintf(result, n + 1, "%d", zero_count);
 
     free_file_lines(file);
+    
     return result;
 }
 
@@ -118,20 +119,21 @@ static char* part2(const char* input_path) {
         }
     }
 
-    char tmp[32];
-    int n = snprintf(tmp, sizeof(tmp), "%d", zero_count);
-    if (n < 0 || n >= (int)sizeof(tmp)) {
+    int n = snprintf(NULL, 0, "%d", zero_count);
+    if (n < 0) {
         free_file_lines(file);
         return strdup("error: formatting output");
     }
 
-    char* result = strdup(tmp);
+    char* result = malloc(n + 1);
     if (!result) {
         free_file_lines(file);
         return strdup("error: allocating output string");
     }
+    snprintf(result, n + 1, "%d", zero_count);
 
     free_file_lines(file);
+
     return result;
 }
 

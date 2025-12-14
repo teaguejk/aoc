@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
+#include <inttypes.h>
 #include "days.h"
 
 static char* part1(const char* input_path) {
@@ -14,6 +16,10 @@ static char* part1(const char* input_path) {
         return strdup("error: expected only one line");
     }
 
+    int64_t* matches = NULL;
+    int matches_count = 0;
+    int matches_capacity = 0;
+
     const char* COMMA = ",";
     const char* DASH = "-";
 
@@ -26,19 +32,105 @@ static char* part1(const char* input_path) {
         char* range = strdup(block);
 
         char* range_saveptr = NULL;
-        char* start = strtok_r(range, DASH, &range_saveptr);
-        char* end = strtok_r(NULL, DASH, &range_saveptr); 
+        char* startStr = strtok_r(range, DASH, &range_saveptr);
+        char* endStr = strtok_r(NULL, DASH, &range_saveptr); 
 
-        printf("%s -- %s -- %s\n", block, start, end);
-        
+        int64_t start = strtoll(startStr, NULL, 10);
+        int64_t end = strtoll(endStr, NULL, 10);
+
+        for (int64_t i = start; i <= end; i++) {
+            int len = snprintf(NULL, 0, "%" PRId64, i);
+
+            if (len % 2 != 0) {
+                continue;
+            }
+
+            int middle = len / 2;
+            
+            char* numStr = (char*)malloc(sizeof(char) * (len + 1));
+            if (numStr == NULL) {
+                return strdup("error: could not allocate memory");
+            }
+
+            snprintf(numStr, len + 1, "%" PRId64, i);
+            
+            char* p1 = (char*)malloc(sizeof(char) * (middle + 1));
+            if (p1 == NULL) {
+                free(numStr);
+                return strdup("error: could not allocate memory");
+            }
+
+            strncpy(p1, numStr, middle);
+            p1[middle] = '\0';
+
+            char* p2 = (char*)malloc(sizeof(char) * (len - middle + 1));
+            if (p2 == NULL) {
+                free(p1);
+                free(numStr);
+                return strdup("error: could not allocate memory");
+            }
+
+            strncpy(p2, numStr + middle, len - middle);
+            p2[len - middle] = '\0';
+
+            int result = strcmp(p1, p2);
+            if (result != 0) {
+                continue;
+            }
+
+            if (matches_count >= matches_capacity) {
+                matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
+                int64_t* temp = realloc(matches, sizeof(int64_t) * matches_capacity);
+                if (temp == NULL) {
+                    free(matches);
+                    free(p1);
+                    free(p2);
+                    free(numStr);
+                    free(range);
+                    free(line);
+                    free_file_lines(file);
+                    return strdup("error: could not allocate memory");
+                }
+                matches = temp;
+            }
+            matches[matches_count++] = i;
+
+            free(p1);
+            free(p2);
+            free(numStr);
+        }
+
         free(range);
         block = strtok_r(NULL, COMMA, &block_saveptr);
     }
 
+    int64_t sum = 0;
+    for (int i = 0; i < matches_count; i++) {
+        sum += matches[i];
+    }
+
+    int n = snprintf(NULL, 0, "%" PRId64, sum);
+    if (n < 0) {
+        free(line);
+        free(matches);
+        free_file_lines(file);
+        return strdup("error: formatting output");
+    }
+
+    char* result = malloc(n + 1);
+    if (!result) {
+        free(line);
+        free(matches);
+        free_file_lines(file);
+        return strdup("error: allocating output string");
+    }
+    snprintf(result, n + 1, "%" PRId64, sum);
+
     free(line);
+    free(matches);
     free_file_lines(file);
 
-    return strdup("part not implemented");
+    return result;
 }
 
 static char* part2(const char* input_path) {
