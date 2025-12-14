@@ -28,7 +28,7 @@ static double elapsed_ms(struct timespec a, struct timespec b) {
 
 static void run_part(int day_number, int part_number, Solution fn) {
     if (!fn) {
-        printf("day %d part %d: no solution\n", day_number, part_number);
+        printf("day %d part %d -> no solution\n", day_number, part_number);
         return;
     }
 
