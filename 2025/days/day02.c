@@ -17,8 +17,8 @@ static char* part1(const char* input_path) {
     }
 
     int64_t* matches = NULL;
-    int matches_count = 0;
-    int matches_capacity = 0;
+    size_t matches_count = 0;
+    size_t matches_capacity = 0;
 
     const char* COMMA = ",";
     const char* DASH = "-";
@@ -105,7 +105,7 @@ static char* part1(const char* input_path) {
     }
 
     int64_t sum = 0;
-    for (int i = 0; i < matches_count; i++) {
+    for (size_t i = 0; i < matches_count; i++) {
         sum += matches[i];
     }
 
@@ -134,8 +134,98 @@ static char* part1(const char* input_path) {
 }
 
 static char* part2(const char* input_path) {
-      (void)input_path;
-    return strdup("part not implemented");
+    InputFile* file = read_file_lines(input_path);
+    if (!file) {
+        return strdup("error: reading file");
+    }
+
+    if (file->count != 1) {
+        free_file_lines(file);
+        return strdup("error: expected only one line");
+    }
+
+    int64_t* matches = NULL;
+    size_t matches_count = 0;
+    size_t matches_capacity = 0;
+
+    const char* COMMA = ",";
+    const char* DASH = "-";
+
+    char* line = strdup(file->lines[0]);
+
+    char* block_saveptr = NULL;
+    char* block = strtok_r(line, COMMA, &block_saveptr);
+
+    while (block != NULL) {
+        char* range = strdup(block);
+
+        char* range_saveptr = NULL;
+        char* startStr = strtok_r(range, DASH, &range_saveptr);
+        char* endStr = strtok_r(NULL, DASH, &range_saveptr); 
+
+        int64_t start = strtoll(startStr, NULL, 10);
+        int64_t end = strtoll(endStr, NULL, 10);
+
+        for (int64_t i = start; i <= end; i++) {
+            int len = snprintf(NULL, 0, "%" PRId64, i);
+
+            char* numStr = (char*)malloc(sizeof(char) * (len + 1));
+            if (numStr == NULL) {
+                return strdup("error: could not allocate memory");
+            }
+
+
+            // the number was invalud, store it
+            snprintf(numStr, len + 1, "%" PRId64, i);
+            if (matches_count >= matches_capacity) {
+                matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
+                int64_t* temp = realloc(matches, sizeof(int64_t) * matches_capacity);
+                if (temp == NULL) {
+                    free(matches);
+                    free(numStr);
+                    free(range);
+                    free(line);
+                    free_file_lines(file);
+                    return strdup("error: could not allocate memory");
+                }
+                matches = temp;
+            }
+            matches[matches_count++] = i;
+
+            free(numStr);
+        }
+
+        free(range);
+        block = strtok_r(NULL, COMMA, &block_saveptr);
+    }
+
+    int64_t sum = 0;
+    for (size_t i = 0; i < matches_count; i++) {
+        sum += matches[i];
+    }
+
+    int n = snprintf(NULL, 0, "%" PRId64, sum);
+    if (n < 0) {
+        free(line);
+        free(matches);
+        free_file_lines(file);
+        return strdup("error: formatting output");
+    }
+
+    char* result = malloc(n + 1);
+    if (!result) {
+        free(line);
+        free(matches);
+        free_file_lines(file);
+        return strdup("error: allocating output string");
+    }
+    snprintf(result, n + 1, "%" PRId64, sum);
+
+    free(line);
+    free(matches);
+    free_file_lines(file);
+
+    return result;
 }
 
 AOC_DAY(day02)

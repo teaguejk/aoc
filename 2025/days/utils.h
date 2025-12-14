@@ -6,7 +6,7 @@
 
 typedef struct {
     char** lines;
-    int count;
+    size_t count;
 } InputFile;
 
 InputFile* read_file_lines(const char* file_path);

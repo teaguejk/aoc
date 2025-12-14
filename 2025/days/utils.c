@@ -20,7 +20,7 @@ InputFile* read_file_lines(const char* file_path) {
     size_t len = 0;
     ssize_t read;
 
-    int capacity = 16;
+    size_t capacity = 16;
     result->lines = malloc(capacity * sizeof(char*));
     if (!result->lines) {
         free(result);
@@ -64,7 +64,7 @@ InputFile* read_file_lines(const char* file_path) {
 void free_file_lines(InputFile* file_lines) {
     if (!file_lines) return;
     
-    for (int i = 0; i < file_lines->count; i++) {
+    for (size_t i = 0; i < file_lines->count; i++) {
         free(file_lines->lines[i]);
     }
     
