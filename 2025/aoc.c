@@ -6,7 +6,8 @@
 
 #define DAYS_TABLE \
     DAY_ENTRY(1, day01) \
-    DAY_ENTRY(2, day02)
+    DAY_ENTRY(2, day02) \
+    DAY_ENTRY(3, day03)
 
 #define DAY_ENTRY(num, name) \
     extern char* name##_part1(const char* input_path); \
@@ -39,7 +40,7 @@ static void run_part(int day_number, int part_number, Solution fn) {
     char *result = fn(input_path);
     clock_gettime(CLOCK_MONOTONIC, &t1);
 
-    printf("day %d: part %d -> took: %.2f ms -> %s\n",
+    printf("day %2d part %d -> took: %8.2f ms -> %s\n",
         day_number, part_number, elapsed_ms(t0, t1), result ? result : "(null)");
 
     free(result);
