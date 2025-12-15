@@ -98,22 +98,42 @@ static char* part2(const char* input_path) {
         }
 
         size_t len = strlen(line);
-        int64_t max_combination = -1;
+        size_t remove_total = len - 12;
+        int removed[256] = {0};
 
-        for (size_t i = 0; i < len; i++) {
-            int64_t first_digit = line[i] - '0';
+        // remove digits to leave the 12-digit number
+        for (size_t removed_count = 0; removed_count < remove_total; removed_count++) {
+            int remove_idx = -1;
             
-            for (size_t j = i + 1; j < len; j++) {
-                int64_t second_digit = line[j] - '0';
-
-                int64_t combination = first_digit * 10 + second_digit;
-                if (combination > max_combination) {
-                    max_combination = combination;
+            for (size_t j = 0; j < len - 1; j++) {
+                if (removed[j]) continue;
+                
+                // look for next non-removed digit
+                size_t next_j = j + 1;
+                while (next_j < len && removed[next_j]) next_j++;
+                
+                // if the next non removed digit is larger, we can remove this one
+                if (next_j < len && line[j] < line[next_j]) {
+                    remove_idx = j;
+                    break;
                 }
+            }
+            
+            if (remove_idx != -1) {
+                removed[remove_idx] = 1;
+            }
+        }
+        
+        char selected[13] = {0};
+        int selected_count = 0;
+        for (size_t j = 0; j < len && selected_count < 12; j++) {
+            if (!removed[j]) {
+                selected[selected_count++] = line[j];
             }
         }
 
-        if (joltages_count >= joltages_capacity) {
+        if (selected_count == 12) {
+            if (joltages_count >= joltages_capacity) {
             joltages_capacity = joltages_capacity == 0 ? 10 : joltages_capacity * 2;
             int64_t* temp = realloc(joltages, sizeof(int64_t) * joltages_capacity);
             if (temp == NULL) {
@@ -122,13 +142,11 @@ static char* part2(const char* input_path) {
                 return strdup("error: could not allocate memory");
             }
             joltages = temp;
-        }
+            }
 
-        if (max_combination == -1) {
-            continue;
+            int64_t joltage = atoll(selected);
+            joltages[joltages_count++] = joltage;
         }
-
-        joltages[joltages_count++] = max_combination;
     }
 
     int64_t sum = 0;
