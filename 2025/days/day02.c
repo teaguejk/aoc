@@ -5,6 +5,9 @@
 #include <inttypes.h>
 #include "days.h"
 
+#define COMMA ","
+#define DASH "-"
+
 static char* part1(const char* input_path) {
     InputFile* file = read_file_lines(input_path);
     if (!file) {
@@ -16,10 +19,7 @@ static char* part1(const char* input_path) {
         return strdup("error: expected only one line");
     }
 
-    int64_t sum = 0; // running sum of invalid numbers
-
-    const char* COMMA = ",";
-    const char* DASH = "-";
+    int64_t sum = 0;
 
     char* line = strdup(file->lines[0]);
 
@@ -118,9 +118,6 @@ static char* part2(const char* input_path) {
     }
 
     int64_t sum = 0;
-
-    const char* COMMA = ",";
-    const char* DASH = "-";
 
     char* line = strdup(file->lines[0]);
 
