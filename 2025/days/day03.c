@@ -10,7 +10,7 @@ static char* part1(const char* input_path) {
     if (!file) {
         return strdup("error: reading file");
     }
-    
+
     int* joltages = NULL;
     size_t joltages_count = 0;
     size_t joltages_capacity = 0;
@@ -26,10 +26,10 @@ static char* part1(const char* input_path) {
 
         for (size_t i = 0; i < len; i++) {
             int first_digit = line[i] - '0';
-            
+
             for (size_t j = i + 1; j < len; j++) {
                 int second_digit = line[j] - '0';
-                
+
                 int combination = first_digit * 10 + second_digit;
                 if (combination > max_combination) {
                     max_combination = combination;
@@ -104,26 +104,26 @@ static char* part2(const char* input_path) {
         // remove digits to leave the 12-digit number
         for (size_t removed_count = 0; removed_count < remove_total; removed_count++) {
             int remove_idx = -1;
-            
+
             for (size_t j = 0; j < len - 1; j++) {
                 if (removed[j]) continue;
-                
+
                 // look for next non-removed digit
                 size_t next_j = j + 1;
                 while (next_j < len && removed[next_j]) next_j++;
-                
+
                 // if the next non removed digit is larger, we can remove this one
                 if (next_j < len && line[j] < line[next_j]) {
                     remove_idx = j;
                     break;
                 }
             }
-            
+
             if (remove_idx != -1) {
                 removed[remove_idx] = 1;
             }
         }
-        
+
         char selected[13] = {0};
         int selected_count = 0;
         for (size_t j = 0; j < len && selected_count < 12; j++) {
@@ -134,14 +134,14 @@ static char* part2(const char* input_path) {
 
         if (selected_count == 12) {
             if (joltages_count >= joltages_capacity) {
-            joltages_capacity = joltages_capacity == 0 ? 10 : joltages_capacity * 2;
-            int64_t* temp = realloc(joltages, sizeof(int64_t) * joltages_capacity);
-            if (temp == NULL) {
-                free(joltages);
-                free_file_lines(file);
-                return strdup("error: could not allocate memory");
-            }
-            joltages = temp;
+                joltages_capacity = joltages_capacity == 0 ? 10 : joltages_capacity * 2;
+                int64_t* temp = realloc(joltages, sizeof(int64_t) * joltages_capacity);
+                if (temp == NULL) {
+                    free(joltages);
+                    free_file_lines(file);
+                    return strdup("error: could not allocate memory");
+                }
+                joltages = temp;
             }
 
             int64_t joltage = atoll(selected);
