@@ -16,9 +16,7 @@ static char* part1(const char* input_path) {
         return strdup("error: expected only one line");
     }
 
-    int64_t* matches = NULL;
-    size_t matches_count = 0;
-    size_t matches_capacity = 0;
+    int64_t sum = 0; // running sum of invalid numbers
 
     const char* COMMA = ",";
     const char* DASH = "-";
@@ -74,27 +72,9 @@ static char* part1(const char* input_path) {
             p2[len - middle] = '\0';
 
             int result = strcmp(p1, p2);
-            if (result != 0) {
-                continue;
+            if (result == 0) {
+                sum += i;
             }
-
-            // the number was invalid, store it
-            if (matches_count >= matches_capacity) {
-                matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
-                int64_t* temp = realloc(matches, sizeof(int64_t) * matches_capacity);
-                if (temp == NULL) {
-                    free(matches);
-                    free(p1);
-                    free(p2);
-                    free(numStr);
-                    free(range);
-                    free(line);
-                    free_file_lines(file);
-                    return strdup("error: could not allocate memory");
-                }
-                matches = temp;
-            }
-            matches[matches_count++] = i;
 
             free(p1);
             free(p2);
@@ -105,15 +85,9 @@ static char* part1(const char* input_path) {
         block = strtok_r(NULL, COMMA, &block_saveptr);
     }
 
-    int64_t sum = 0;
-    for (size_t i = 0; i < matches_count; i++) {
-        sum += matches[i];
-    }
-
     int n = snprintf(NULL, 0, "%" PRId64, sum);
     if (n < 0) {
         free(line);
-        free(matches);
         free_file_lines(file);
         return strdup("error: formatting output");
     }
@@ -121,14 +95,12 @@ static char* part1(const char* input_path) {
     char* result = malloc(n + 1);
     if (!result) {
         free(line);
-        free(matches);
         free_file_lines(file);
         return strdup("error: allocating output string");
     }
     snprintf(result, n + 1, "%" PRId64, sum);
 
     free(line);
-    free(matches);
     free_file_lines(file);
 
     return result;
@@ -145,9 +117,7 @@ static char* part2(const char* input_path) {
         return strdup("error: expected only one line");
     }
 
-    int64_t* matches = NULL;
-    size_t matches_count = 0;
-    size_t matches_capacity = 0;
+    int64_t sum = 0;
 
     const char* COMMA = ",";
     const char* DASH = "-";
@@ -197,27 +167,9 @@ static char* part2(const char* input_path) {
                 }
             }
 
-            if (!has_repeat) {
-                free(numStr);
-                continue;
+            if (has_repeat) {
+                sum += i;
             }
-
-            // the number was invalid, store it
-            snprintf(numStr, len + 1, "%" PRId64, i);
-            if (matches_count >= matches_capacity) {
-                matches_capacity = matches_capacity == 0 ? 10 : matches_capacity * 2;
-                int64_t* temp = realloc(matches, sizeof(int64_t) * matches_capacity);
-                if (temp == NULL) {
-                    free(matches);
-                    free(numStr);
-                    free(range);
-                    free(line);
-                    free_file_lines(file);
-                    return strdup("error: could not allocate memory");
-                }
-                matches = temp;
-            }
-            matches[matches_count++] = i;
 
             free(numStr);
         }
@@ -226,15 +178,9 @@ static char* part2(const char* input_path) {
         block = strtok_r(NULL, COMMA, &block_saveptr);
     }
 
-    int64_t sum = 0;
-    for (size_t i = 0; i < matches_count; i++) {
-        sum += matches[i];
-    }
-
     int n = snprintf(NULL, 0, "%" PRId64, sum);
     if (n < 0) {
         free(line);
-        free(matches);
         free_file_lines(file);
         return strdup("error: formatting output");
     }
@@ -242,14 +188,12 @@ static char* part2(const char* input_path) {
     char* result = malloc(n + 1);
     if (!result) {
         free(line);
-        free(matches);
         free_file_lines(file);
         return strdup("error: allocating output string");
     }
     snprintf(result, n + 1, "%" PRId64, sum);
 
     free(line);
-    free(matches);
     free_file_lines(file);
 
     return result;

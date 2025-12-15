@@ -14,8 +14,8 @@ static char* part1(const char* input_path) {
     int zero_count = 0;
     int position = 50;
 
-    for (size_t i = 0; i < file->count; i++) {
-        char* line = file->lines[i];
+    for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
+        char* line = file->lines[line_idx];
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -77,8 +77,8 @@ static char* part2(const char* input_path) {
     int zero_count = 0;
     int position = 50;
 
-    for (size_t i = 0; i < file->count; i++) {
-        char* line = file->lines[i];
+    for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
+        char* line = file->lines[line_idx];
         if (!line || line[0] == '\0') {
             continue;
         }
