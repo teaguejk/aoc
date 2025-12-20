@@ -153,6 +153,7 @@ InputFile* file = read_file_lines(input_path);
                     if (nx < 0 || (size_t)nx >= nlen) {
                         continue;
                     }
+                    
                     if (nline[nx] == PAPER && !check_visited(nx, ny)) {
                         paper_count++;
                     }
