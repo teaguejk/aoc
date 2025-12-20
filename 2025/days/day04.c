@@ -158,7 +158,7 @@ InputFile* file = read_file_lines(input_path);
                     }
                 }
                 
-                if (paper_count < 4 ) {
+                if (paper_count < 4) {
                     mark_visited(char_idx, line_idx);
                     sum ++;
                     papers_processed++;
