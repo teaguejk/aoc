@@ -7,7 +7,8 @@
 #define DAYS_TABLE \
     DAY_ENTRY(1, day01) \
     DAY_ENTRY(2, day02) \
-    DAY_ENTRY(3, day03)
+    DAY_ENTRY(3, day03) \
+    DAY_ENTRY(4, day04)
 
 #define DAY_ENTRY(num, name) \
     extern char* name##_part1(const char* input_path); \
