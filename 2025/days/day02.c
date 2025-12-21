@@ -5,9 +5,6 @@
 #include <inttypes.h>
 #include "days.h"
 
-#define COMMA ","
-#define DASH "-"
-
 static char* part1(const char* input_path) {
     InputFile* file = read_file_lines(input_path);
     if (!file) {
@@ -30,11 +27,11 @@ static char* part1(const char* input_path) {
         char* range = strdup(block);
 
         char* range_saveptr = NULL;
-        char* startStr = strtok_r(range, DASH, &range_saveptr);
-        char* endStr = strtok_r(NULL, DASH, &range_saveptr); 
+        char* start_str = strtok_r(range, DASH, &range_saveptr);
+        char* end_str = strtok_r(NULL, DASH, &range_saveptr); 
 
-        int64_t start = strtoll(startStr, NULL, 10);
-        int64_t end = strtoll(endStr, NULL, 10);
+        int64_t start = strtoll(start_str, NULL, 10);
+        int64_t end = strtoll(end_str, NULL, 10);
 
         for (int64_t i = start; i <= end; i++) {
             int len = snprintf(NULL, 0, "%" PRId64, i);
@@ -45,30 +42,30 @@ static char* part1(const char* input_path) {
 
             int middle = len / 2;
             
-            char* numStr = (char*)malloc(sizeof(char) * (len + 1));
-            if (numStr == NULL) {
+            char* num_str = (char*)malloc(sizeof(char) * (len + 1));
+            if (num_str == NULL) {
                 return strdup("error: could not allocate memory");
             }
 
-            snprintf(numStr, len + 1, "%" PRId64, i);
+            snprintf(num_str, len + 1, "%" PRId64, i);
             
             char* p1 = (char*)malloc(sizeof(char) * (middle + 1));
             if (p1 == NULL) {
-                free(numStr);
+                free(num_str);
                 return strdup("error: could not allocate memory");
             }
 
-            strncpy(p1, numStr, middle);
+            strncpy(p1, num_str, middle);
             p1[middle] = '\0';
 
             char* p2 = (char*)malloc(sizeof(char) * (len - middle + 1));
             if (p2 == NULL) {
                 free(p1);
-                free(numStr);
+                free(num_str);
                 return strdup("error: could not allocate memory");
             }
 
-            strncpy(p2, numStr + middle, len - middle);
+            strncpy(p2, num_str + middle, len - middle);
             p2[len - middle] = '\0';
 
             int result = strcmp(p1, p2);
@@ -78,7 +75,7 @@ static char* part1(const char* input_path) {
 
             free(p1);
             free(p2);
-            free(numStr);
+            free(num_str);
         }
 
         free(range);
