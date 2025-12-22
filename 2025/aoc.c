@@ -9,7 +9,8 @@
     DAY_ENTRY(2, day02) \
     DAY_ENTRY(3, day03) \
     DAY_ENTRY(4, day04) \
-    DAY_ENTRY(5, day05)
+    DAY_ENTRY(5, day05) \
+    DAY_ENTRY(6, day06)
 
 #define DAY_ENTRY(num, name) \
     extern char* name##_part1(const char* input_path); \

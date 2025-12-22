@@ -3,8 +3,13 @@
 
 #include "utils.h"
 
-#define COMMA ","
-#define DASH "-"
+#define COMMA ','
+#define DASH '-'
+
+#define STAR '*'
+#define PLUS '+'
+
+#define SPACE " "
 
 #define AOC_DAY(day) \
     char* day##_part1(const char* input_path) { return part1(input_path); } \
