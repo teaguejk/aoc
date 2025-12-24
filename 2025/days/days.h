@@ -5,11 +5,12 @@
 
 #define COMMA ","
 #define DASH "-"
+#define SPACE " "
 
 #define STAR '*'
 #define PLUS '+'
-
-#define SPACE " "
+#define CARET '^'
+#define S 'S'
 
 #define AOC_DAY(day) \
     char* day##_part1(const char* input_path) { return part1(input_path); } \

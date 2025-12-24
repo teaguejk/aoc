@@ -32,16 +32,16 @@ static char* part1(const char* input_path) {
     free(first_line_copy);
 
     for (size_t col_idx = 0; col_idx < cols; col_idx++) {
-        int64_t answer = 0;
-
         char* op_line_copy = strdup(file->lines[file->count - 1]);
         char* op_token = strtok(op_line_copy, SPACE);
         for (size_t i = 0; i < col_idx; i++) {
             op_token = strtok(NULL, SPACE);
         }
-
+        
         char op = op_token[0];
         free(op_line_copy);
+        
+        int64_t answer = op == PLUS ? 0 : 1;
 
         for (size_t row_idx = 0; row_idx < file->count - 1; row_idx++) {
             char* num_line_copy = strdup(file->lines[row_idx]);
@@ -53,11 +53,6 @@ static char* part1(const char* input_path) {
             }
 
             int64_t num = atoll(num_str);    
-
-            if (row_idx == 0) {
-                answer += num;
-                continue;
-            }
             
             switch (op) {
                 case STAR:
@@ -185,25 +180,19 @@ static char* part2(const char* input_path) {
         }
 
         // do the math right-to-left
-        int64_t result = 0;
-        bool first_num = true;
+        int64_t result = op == PLUS ? 0 : 1;
         
         for (int i = col_widths[col_idx] - 1; i >= 0; i--) {
             if (strlen(vertical_numbers[i]) > 0) {
                 int64_t num = atoll(vertical_numbers[i]);
                 
-                if (first_num) {
-                    result = num;
-                    first_num = false;
-                } else {
-                    switch (op) {
-                        case STAR:
-                            result *= num;
-                            break;
-                        case PLUS:
-                            result += num;
-                            break;
-                    }
+                switch (op) {
+                    case STAR:
+                        result *= num;
+                        break;
+                    case PLUS:
+                        result += num;
+                        break;
                 }
             }
         }
