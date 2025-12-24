@@ -3,8 +3,8 @@
 
 #include "utils.h"
 
-#define COMMA ','
-#define DASH '-'
+#define COMMA ","
+#define DASH "-"
 
 #define STAR '*'
 #define PLUS '+'
