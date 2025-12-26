@@ -14,7 +14,7 @@ static char* part1(const char* input_path) {
     int sum = 0;
 
     for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-        char* line = file->lines[line_idx];
+        char* line = strdup(file->lines[line_idx]);
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -38,6 +38,8 @@ static char* part1(const char* input_path) {
         if (max_combination != -1) {
             sum += max_combination;
         }
+
+        free(line);
     }
 
     int n = snprintf(NULL, 0, "%d", sum);
@@ -67,7 +69,7 @@ static char* part2(const char* input_path) {
     int64_t sum = 0;
 
     for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-        char* line = file->lines[line_idx];
+        char* line = strdup(file->lines[line_idx]);
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -102,6 +104,8 @@ static char* part2(const char* input_path) {
             int64_t joltage = atoll(selected);
             sum += joltage;
         }
+
+        free(line);
     }
 
     int n = snprintf(NULL, 0, "%" PRId64, sum);

@@ -15,7 +15,7 @@ static char* part1(const char* input_path) {
     int position = 50;
 
     for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-        char* line = file->lines[line_idx];
+        char* line = strdup(file->lines[line_idx]);
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -47,6 +47,8 @@ static char* part1(const char* input_path) {
         if (position == 0) {
             zero_count++;
         }
+
+        free(line);
     }
 
     int n = snprintf(NULL, 0, "%d", zero_count);
@@ -78,7 +80,7 @@ static char* part2(const char* input_path) {
     int position = 50;
 
     for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-        char* line = file->lines[line_idx];
+        char* line = strdup(file->lines[line_idx]);
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -117,6 +119,8 @@ static char* part2(const char* input_path) {
             
             position = new_position;
         }
+
+        free(line);
     }
 
     int n = snprintf(NULL, 0, "%d", zero_count);

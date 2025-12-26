@@ -32,14 +32,14 @@ static char* part1(const char* input_path) {
     }
     
     for (size_t range_idx = 0; range_idx < separator; range_idx++) {
-        char* line_copy = strdup(file->lines[range_idx]);
-        char* start_str = strtok(line_copy, DASH);      
+        char* line = strdup(file->lines[range_idx]);
+        char* start_str = strtok(line, DASH);      
         char* end_str = strtok(NULL, DASH);
 
         ranges[range_idx].start = atoll(start_str);
         ranges[range_idx].end = atoll(end_str);
         
-        free(line_copy);
+        free(line);
     }
 
     for (size_t id_idx = separator+1; id_idx < file->count; id_idx++) {
@@ -87,14 +87,14 @@ static char* part2(const char* input_path) {
     }
     
     for (size_t range_idx = 0; range_idx < separator; range_idx++) {
-        char* line_copy = strdup(file->lines[range_idx]);
-        char* start_str = strtok(line_copy, DASH);      
+        char* line = strdup(file->lines[range_idx]);
+        char* start_str = strtok(line, DASH);      
         char* end_str = strtok(NULL, DASH);
 
         ranges[range_idx].start = atoll(start_str);
         ranges[range_idx].end = atoll(end_str);
         
-        free(line_copy);
+        free(line);
     }
     
     // sort and merge ranges, then sum the diffs

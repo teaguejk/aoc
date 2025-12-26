@@ -84,14 +84,12 @@ static char* part1(const char* input_path) {
 
     int n = snprintf(NULL, 0, "%" PRId64, sum);
     if (n < 0) {
-        free(line);
         free_file_lines(file);
         return strdup("error: formatting output");
     }
 
     char* result = malloc(n + 1);
     if (!result) {
-        free(line);
         free_file_lines(file);
         return strdup("error: allocating output string");
     }

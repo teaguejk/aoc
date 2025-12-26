@@ -31,7 +31,7 @@ static char* part1(const char* input_path) {
     int sum = 0;
 
     for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-        char* line = file->lines[line_idx];
+        char* line = strdup(file->lines[line_idx]);
         if (!line || line[0] == '\0') {
             continue;
         }
@@ -79,6 +79,8 @@ static char* part1(const char* input_path) {
                 sum ++;
             }
         }
+
+        free(line);
     } 
 
     int n = snprintf(NULL, 0, "%d", sum);
@@ -111,7 +113,7 @@ InputFile* file = read_file_lines(input_path);
     do {
         papers_processed = 0;
         for (size_t line_idx = 0; line_idx < file->count; line_idx++) {
-            char* line = file->lines[line_idx];
+            char* line = strdup(file->lines[line_idx]);
             if (!line || line[0] == '\0') {
                 continue;
             }
@@ -164,6 +166,8 @@ InputFile* file = read_file_lines(input_path);
                     sum ++;
                     papers_processed++;
                 }
+
+                free(line);
             }
         } 
     } while (papers_processed > 0);
